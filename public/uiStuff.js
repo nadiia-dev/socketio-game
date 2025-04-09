@@ -1,10 +1,8 @@
-import { init } from "./canvasStuff.js";
-
 let wHeight = window.innerHeight;
 let wWidth = window.innerWidth;
 const canvas = document.querySelector("#the-canvas");
 
-export const context = canvas.getContext("2d");
+const context = canvas.getContext("2d");
 
 canvas.height = wHeight;
 canvas.width = wWidth;
