@@ -1,2 +1,2 @@
-import "./expressStuff/expressMain";
-import "./socketStuff/socketMain";
+import "./expressStuff/expressMain.js";
+import "./socketStuff/socketMain.js";
