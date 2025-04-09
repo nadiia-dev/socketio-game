@@ -1,10 +1,14 @@
+const init = () => {
+  draw();
+};
+
 player.locX = Math.floor(500 * Math.random() + 10); // horizontal axis
 player.locY = Math.floor(500 * Math.random() + 10); // vertical axis
 
 const draw = () => {
-  context.clearRect(0, 0, canvas.width, canvas.height);
-
   context.setTransform(1, 0, 0, 1, 0, 0);
+
+  context.clearRect(0, 0, canvas.width, canvas.height);
 
   const camX = -player.locX + canvas.width / 2;
   const camY = -player.locY + canvas.height / 2;
@@ -18,6 +22,14 @@ const draw = () => {
   context.lineWidth = 3;
   context.strokeStyle = "rgb(0,255,0)";
   context.stroke();
+
+  orbs.forEach((orb) => {
+    context.beginPath();
+    context.fillStyle = orb.color;
+    context.arc(orb.locX, orb.locY, orb.radius, 0, Math.PI * 2);
+    context.fill();
+  });
+
   requestAnimationFrame(draw);
 };
 
