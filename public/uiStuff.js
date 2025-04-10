@@ -38,7 +38,7 @@ document.querySelector(".start-game").addEventListener("click", (e) => {
 });
 
 document.querySelector(".btn-github").addEventListener("click", (e) => {
-  window.location.href = `http://localhost:9000/auth/github`;
+  window.location.href = "https://socketio-game-7agv.onrender.com/auth/github";
   loginModal.hide();
 });
 
