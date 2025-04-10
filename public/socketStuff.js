@@ -21,6 +21,13 @@ socket.on("tick", (playersArray) => {
   globalPlayers = playersArray;
   player.locX = globalPlayers[player.indexInPlayers].playerData.locX;
   player.locY = globalPlayers[player.indexInPlayers].playerData.locY;
+});
 
-  // console.log(globalPlayers);
+socket.on("orbSwitch", (orbData) => {
+  orbs.splice(orbData.capturedOrbI, 1, orbData.newOrb);
+});
+
+socket.on("playerAbsorbed", (absorbData) => {
+  console.log("absorbed", absorbData.absorbed);
+  console.log("absorb", absorbData.absorbedBy);
 });

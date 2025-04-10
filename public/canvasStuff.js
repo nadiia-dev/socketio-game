@@ -67,6 +67,4 @@ canvas.addEventListener("mousemove", (event) => {
 
   player.xVector = xVector ? xVector : 0.1;
   player.yVector = yVector ? yVector : 0.1;
-
-  console.log(player);
 });
