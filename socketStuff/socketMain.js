@@ -9,25 +9,26 @@ import { PlayerData } from "./classes/PlayerData.js";
 const orbs2 = [];
 const settings = {
   defaultNumOfOrbs: 500,
-  degaultSpeed: 6,
+  defaultSpeed: 6,
   defaultSize: 6,
-  ddefaultZoom: 1.5,
+  defaultZoom: 1.5,
   worldWidth: 500,
   worldHeight: 500,
   defaultGenericOrbSize: 5,
 };
 
 const players = [];
+const playersForUsers = [];
 let tickTockInterval;
 
 initGame();
 
 io.on("connect", (socket) => {
-  let player = {};
+  let playerLoc = {};
   socket.on("init", (playerObj, ackCallback) => {
     if (players.length === 0) {
       tickTockInterval = setInterval(() => {
-        io.to("game").emit("tick", players);
+        io.to("game").emit("tick", playersForUsers);
       }, 33);
     }
 
@@ -36,29 +37,32 @@ io.on("connect", (socket) => {
     const playerName = playerObj.playerName;
     const playerConfig = new PlayerConfig(settings);
     const playerData = new PlayerData(playerName, settings);
-    player = new Player(socket.id, playerConfig, playerData);
-    players.push(player);
-    ackCallback(orbs2);
+    playerLoc = new Player(socket.id, playerConfig, playerData);
+    playersForUsers.push({ playerData });
+    ackCallback({ orbs2, indexInPlayers: playersForUsers.length - 1 });
   });
 
   socket.on("tock", (data) => {
-    let speed = player.playerConfig.speed;
-    const xV = (player.playerConfig.xVector = data.xVector);
-    const yV = (player.playerConfig.yVector = data.yVector);
+    if (!playerLoc.playerConfig) {
+      return;
+    }
+    let speed = playerLoc.playerConfig.speed;
+    const xV = (playerLoc.playerConfig.xVector = data.xVector);
+    const yV = (playerLoc.playerConfig.yVector = data.yVector);
 
     if (
-      (player.playerData.locX < 5 && xV < 0) ||
-      (player.playerData.locX > 500 && xV > 0)
+      (playerLoc.playerData.locX < 5 && xV < 0) ||
+      (playerLoc.playerData.locX > 500 && xV > 0)
     ) {
-      player.playerData.locY -= speed * yV;
+      playerLoc.playerData.locY -= speed * yV;
     } else if (
-      (player.playerData.locY < 5 && yV > 0) ||
-      (player.playerData.locY > 500 && yV < 0)
+      (playerLoc.playerData.locY < 5 && yV > 0) ||
+      (playerLoc.playerData.locY > 500 && yV < 0)
     ) {
-      player.playerData.locX += speed * xV;
+      playerLoc.playerData.locX += speed * xV;
     } else {
-      player.playerData.locX += speed * xV;
-      player.playerData.locY -= speed * yV;
+      playerLoc.playerData.locX += speed * xV;
+      playerLoc.playerData.locY -= speed * yV;
     }
   });
 

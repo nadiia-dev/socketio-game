@@ -7,9 +7,9 @@ const context = canvas.getContext("2d");
 canvas.height = wHeight;
 canvas.width = wWidth;
 
-const player = {};
+window.player = {};
 window.orbs = [];
-const players = [];
+window.globalPlayers = [];
 
 const loginModal = new bootstrap.Modal(document.querySelector("#loginModal"));
 const spawnModal = new bootstrap.Modal(document.querySelector("#spawnModal"));
@@ -24,6 +24,7 @@ document.querySelector(".name-form").addEventListener("submit", (e) => {
   document.querySelector(".player-name").innerHTML = player.name;
   loginModal.hide();
   spawnModal.show();
+  console.log(player);
 });
 
 document.querySelector(".start-game").addEventListener("click", (e) => {

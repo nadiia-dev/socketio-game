@@ -1,6 +1,3 @@
-player.locX = Math.floor(500 * Math.random() + 10); // horizontal axis
-player.locY = Math.floor(500 * Math.random() + 10); // vertical axis
-
 const draw = () => {
   context.setTransform(1, 0, 0, 1, 0, 0);
 
@@ -11,7 +8,9 @@ const draw = () => {
 
   context.translate(camX, camY);
 
-  players.forEach((p) => {
+  globalPlayers.forEach((p) => {
+    if (!p.playerData) return;
+
     context.beginPath();
     context.fillStyle = p.playerData.color;
     context.arc(
@@ -66,6 +65,8 @@ canvas.addEventListener("mousemove", (event) => {
     yVector = 1 - (angleDeg + 90) / 90;
   }
 
-  player.xVector = xVector;
-  player.yVector = yVector;
+  player.xVector = xVector ? xVector : 0.1;
+  player.yVector = yVector ? yVector : 0.1;
+
+  console.log(player);
 });
