@@ -13,12 +13,12 @@ import {
 
 const orbs2 = [];
 const settings = {
-  defaultNumOfOrbs: 500,
+  defaultNumOfOrbs: 5000,
   defaultSpeed: 6,
   defaultSize: 6,
   defaultZoom: 1.5,
-  worldWidth: 500,
-  worldHeight: 500,
+  worldWidth: 5000,
+  worldHeight: 5000,
   defaultGenericOrbSize: 5,
 };
 
@@ -101,6 +101,13 @@ io.on("connect", (socket) => {
   });
 
   socket.on("disconnect", () => {
+    for (let i = 0; i < players.length; i++) {
+      if (players[i].id === playerLoc.id) {
+        players.splice(i, 1, {});
+        playersForUsers.splice(i, 1, {});
+        break;
+      }
+    }
     if (players.length === 0) {
       clearInterval(tickTockInterval);
     }

@@ -53,4 +53,6 @@ socket.on("updateLeaderBoard", (leaderBoardArray) => {
                 <li class="leaderboard-player">${p.name} - ${p.score}</li>
             `;
   });
+  const el = leaderBoardArray.find((u) => u.name === player.name);
+  document.querySelector(".player-score").innerHTML = el.score;
 });
