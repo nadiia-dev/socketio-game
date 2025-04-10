@@ -16,7 +16,6 @@ app.use(cors());
 const API_URL = process.env.API_URL;
 const CLIENT_ID = process.env.GITHUB_OAUTH_CLIENT_ID;
 const CLIENT_SECRET = process.env.GITHUB_OAUTH_CLIENT_SECRET;
-console.log(API_URL);
 
 app.get("/auth/github", (req, res) => {
   const redirect_uri = `${API_URL}/auth/github/callback`;
@@ -55,5 +54,6 @@ app.get("/auth/github/callback", async (req, res) => {
 
 app.use(express.static(__dirname + "/public"));
 const expressServer = app.listen(9000);
+console.log("app listening to port 9000");
 
 export const io = new Server(expressServer);
