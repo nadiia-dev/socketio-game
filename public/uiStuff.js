@@ -9,6 +9,7 @@ canvas.width = wWidth;
 
 const player = {};
 window.orbs = [];
+const players = [];
 
 const loginModal = new bootstrap.Modal(document.querySelector("#loginModal"));
 const spawnModal = new bootstrap.Modal(document.querySelector("#spawnModal"));

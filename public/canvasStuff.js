@@ -11,13 +11,21 @@ const draw = () => {
 
   context.translate(camX, camY);
 
-  context.beginPath();
-  context.fillStyle = "rgb(255,0,0)";
-  context.arc(player.locX, player.locY, 10, 0, Math.PI * 2);
-  context.fill();
-  context.lineWidth = 3;
-  context.strokeStyle = "rgb(0,255,0)";
-  context.stroke();
+  players.forEach((p) => {
+    context.beginPath();
+    context.fillStyle = p.playerData.color;
+    context.arc(
+      p.playerData.locX,
+      p.playerData.locY,
+      p.playerData.radius,
+      0,
+      Math.PI * 2
+    );
+    context.fill();
+    context.lineWidth = 3;
+    context.strokeStyle = "rgb(0,255,0)";
+    context.stroke();
+  });
 
   orbs.forEach((orb) => {
     context.beginPath();
@@ -58,16 +66,6 @@ canvas.addEventListener("mousemove", (event) => {
     yVector = 1 - (angleDeg + 90) / 90;
   }
 
-  let speed = 10;
-  let xV = xVector;
-  let yV = yVector;
-
-  if ((player.locX < 5 && xV < 0) || (player.locX > 500 && xV > 0)) {
-    player.locY -= speed * yV;
-  } else if ((player.locY < 5 && yV > 0) || (player.locY > 500 && yV < 0)) {
-    player.locX += speed * xV;
-  } else {
-    player.locX += speed * xV;
-    player.locY -= speed * yV;
-  }
+  player.xVector = xVector;
+  player.yVector = yVector;
 });
