@@ -14,8 +14,11 @@ window.globalPlayers = [];
 const loginModal = new bootstrap.Modal(document.querySelector("#loginModal"));
 const spawnModal = new bootstrap.Modal(document.querySelector("#spawnModal"));
 
+const params = new URLSearchParams(window.location.search);
+const username = params.get("username");
+
 window.addEventListener("load", () => {
-  loginModal.show();
+  if (!username) loginModal.show();
 });
 
 document.querySelector(".name-form").addEventListener("submit", (e) => {
@@ -36,12 +39,12 @@ document.querySelector(".start-game").addEventListener("click", (e) => {
 
 document.querySelector(".btn-github").addEventListener("click", (e) => {
   window.location.href = `http://localhost:9000/auth/github`;
+  loginModal.hide();
 });
 
-const params = new URLSearchParams(window.location.search);
-const username = params.get("username");
 if (username) {
   player.name = username;
+  document.querySelector(".player-name").innerHTML = username;
   loginModal.hide();
   spawnModal.show();
 }
